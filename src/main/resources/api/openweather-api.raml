@@ -1,0 +1,44 @@
+#%RAML 1.0
+title: OpenWeather-API
+description: This API provides the weather forecast of a region based on lat&long on validation through an API key.
+version: v1
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/763a1324-c72a-485c-9a47-c98088e527e4/ # baseUri: 
+securitySchemes:
+  basic:
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
+
+/weatherForecast:
+  get:
+    
+    description: Get the the weather forecast of a specific region based on lat&long
+    headers:
+      AppId:
+        displayName: API key
+        description: This header is used to send data that contains your mashape API key
+        type: string
+        required: true
+        example: 2a622d0c3411454f6bd6e1aef50ea24c
+    queryParameters:
+      Lat:
+        displayName: Latitude
+        description: The latitude coordinate
+        type: number
+        required: true
+        example: 37.354108
+      Lng:
+        type: number
+        description: The longitude coordinate
+        required: true
+        example: -121.955236
+      Exclude:
+        type: string
+        required: false
+        example: current
+    responses:
+       200:
+         body:
+           application/text:
+            example: !include Examples/weather.json
+               

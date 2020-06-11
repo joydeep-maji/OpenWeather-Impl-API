@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="6f0e1e5b-10b6-45c3-9002-44d2304da7f9" >
+		<http:listener-connection host="0.0.0.0" port="8085" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="6669e889-de63-424f-b813-2b303a36921d" >
+		<http:request-connection host="api.openweathermap.org" port="80"/>
+	</http:request-config>
+	<flow name="openweather-api-implFlow" doc:id="c54fe049-df9d-4849-b494-cd552d475343" >
+		<http:listener doc:name="Listener" doc:id="acd0aa74-ac9a-4fdd-ada4-a54a5b7ab286" config-ref="HTTP_Listener_config" path="/weatherForecast"/>
+		<logger level="INFO" doc:name="Logger" doc:id="938acf92-9315-4f1c-b646-6f5bec70e5d8" message="#['Flow Started with App Id: ' ++ attributes.headers.AppId]"/>
+		<ee:transform doc:name="Transform Message" doc:id="5c4ef939-1b8b-48ac-9bdb-e6e84d96033d" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="lat" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes.queryParams.Lat]]></ee:set-variable>
+				<ee:set-variable variableName="lon" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes.queryParams.Lat]]></ee:set-variable>
+				<ee:set-variable variableName="exclude" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes.queryParams.Exclude]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<http:request method="GET" doc:name="Request" doc:id="e6dfb54c-baed-490a-8563-b7fd5ef3e1cd" config-ref="HTTP_Request_configuration" path="/data/2.5/onecall" outputMimeType="application/json">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"lat" : vars.lat,
+	"lon" : vars.lon,
+	"exclude" : vars.exclude,
+	"appid" : attributes.headers.AppId
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>
