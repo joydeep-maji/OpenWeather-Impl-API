@@ -13,7 +13,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</http:request-config>
 	<flow name="openweather-api-implFlow" doc:id="c54fe049-df9d-4849-b494-cd552d475343" >
 		<http:listener doc:name="Listener" doc:id="acd0aa74-ac9a-4fdd-ada4-a54a5b7ab286" config-ref="HTTP_Listener_config" path="/weatherForecast"/>
-		<logger level="INFO" doc:name="Logger" doc:id="938acf92-9315-4f1c-b646-6f5bec70e5d8" message="#['Flow Started with App Id**** ' ++ attributes.headers.AppId]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="938acf92-9315-4f1c-b646-6f5bec70e5d8" message="#['Flow Started with App Id***** ' ++ attributes.headers.AppId]"/>
 		<ee:transform doc:name="Transform Message" doc:id="5c4ef939-1b8b-48ac-9bdb-e6e84d96033d" >
 			<ee:message >
 			</ee:message>
