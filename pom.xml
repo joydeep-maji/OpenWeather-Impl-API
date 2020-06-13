@@ -27,8 +27,8 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-				<cloudHubDeployment>
-				<muleVersion>4.2.0</muleVersion>
+				<!-- <cloudHubDeployment>
+			<muleVersion>4.2.0</muleVersion>
 				<username>joydeep_010</username>
 				<password>Joy@1994</password>
 				<redeploy>true</redeploy>
@@ -36,7 +36,7 @@
 				<applicationName>OpenWeatherAPI-Impl</applicationName>
 				<workerType>Micro</workerType>
 				<workers>1</workers>
-				</cloudHubDeployment>
+				</cloudHubDeployment>  -->
 				</configuration>
 			</plugin>
 		</plugins>
